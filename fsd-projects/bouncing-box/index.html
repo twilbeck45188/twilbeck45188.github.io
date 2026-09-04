@@ -8,12 +8,14 @@
       .box {
         width: 70px;
         height: 70px;
-        background-color: teal;
+        background-color: rgb(255, 161, 250);
         font-size: 300%;
         text-align: center;
         user-select: none;
         display: block;
         position: absolute;
+       
+        
         top: 100px;
         /* Change me! */
         left: 0px;
@@ -21,6 +23,8 @@
 
       .board {
         height: 100vh;
+        background-color:rgb(208, 255, 252)
+
       }
     </style>
     <!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
@@ -39,13 +43,21 @@
         /////////////////// SETUP DO NOT DELETE //////////////////////////
         //////////////////////////////////////////////////////////////////
 
-        var box = jQuery(".box"); // reference to the HTML .box element
+        var box = jQuery(".box"); // reference to the 0HTML .box element
         var board = jQuery(".board"); // reference to the HTML .board element
         var boardWidth = board.width(); // the maximum X-Coordinate of the screen
+        var boardHeight = jQuery(window).height();
+        var positionX = 0;
+         var points = 0;
+        var speed = 10;
+        var positionY = 100;
+        var speedY = 3;
+
 
         // update the boardWidth variable when the window is resized
         jQuery(window).on("resize", function () {
           boardWidth = board.width();
+          boardHeight = jQuery(window).height();
         });
 
         // Every 50 milliseconds, call the update Function (see below)
@@ -55,46 +67,55 @@
         box.on("click", handleBoxClick);
 
         // moves the Box to a new position on the screen along the X-Axis
-        function moveBoxTo(newPositionX) {
+        function moveBoxTo(newPositionX,newPositionY) {
           box.css("left", newPositionX);
+          box.css("top", newpositionY);
         }
+
+    
 
         // changes the text displayed on the Box
         function changeBoxText(newText) {
           box.text(newText);
         }
 
-        //////////////////////////////////////////////////////////////////
-        /////////////////// YOUR CODE BELOW HERE /////////////////////////
+      
+      ///  YOUR CODE BELOW HERE /////////////////////////
         //////////////////////////////////////////////////////////////////
 
         // TODO 2 - Variable declaration
         var positionX = 0;
         var points = 0;
-        var speed = 10
-
-
-
-        /**
-         * This Function will be called 20 times/second.
-         * Each time it is called, it should move the Box to a new location.
-         * If the box drifts off the screen, turn it around!
-         */
-        function update() {
-          positionX = positionX + speed;
-          moveBoxTo(positionX); 
-          if(positionX > boardWidth){
-            speed *= -1;
-          }
-          if(positionX < 0){
-            speed *= -1;
-          }
-
-
+        var speed = 10;
+        var positionY = 100;
+        var speedY = 3;
       
-        
 
-          
+
+
+        function update() {
+         var maxX = boardWidth - box.width();
+         var maxY = boardHeight - box.height();
+
+         positionX += speed;
+         positionY += speedY;
+
+        if(positionX >= maxX || positionX <=0){
+          positionX = Math.min(Math.max())
+        }
+        else if(positionX >= boardHeight - boxHeight){
+          speed *= -1;
+        }
+
+        if(positionY >= boardHeight - boxHeight){
+          positionY =  boardHeight - boxHeight;
+          directionY = 1;
+        }
+        else if(positionY <= 0){
+          speed *= -1;
+        }
+        moveBoxTo(positionX, positionY);
+
         }
 
         /**
@@ -106,14 +127,12 @@
          */
         function handleBoxClick() {
           positionX = 0;
-          points++;
+          points ++;
           changeBoxText(points);
           speed = 3 * points + 10;
-
-
+          speedY = 3 * points + 10;
 
         }
-
 
         
       })();
