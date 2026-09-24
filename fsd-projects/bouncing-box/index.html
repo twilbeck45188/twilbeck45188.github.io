@@ -51,7 +51,6 @@
       var points = 0;
       var speed = 10;
       var speedY = 3;
-      var misclicks = 0;
 
       // update the boardWidth variable when the window is resized
       jQuery(window).on("resize", function () {
@@ -84,12 +83,6 @@
         return "rgb(" + red + ", " + green + ", " + blue + ")";
       }
 
-      function endGame() {
-        clearInterval(interval);
-        box.off("click");
-        board.off("click");
-        changeBoxText("END");
-      }
 
       //////////////////////////////////////////////////////////////////
       /////////////////// YOUR CODE BELOW HERE /////////////////////////
@@ -120,15 +113,8 @@
         moveBoxTo(positionX, positionY);
       }
 
-      /**
-       * This Function will be called each time the box is clicked.
-       * Each time it is called, it should perform each of the following actions:
-       * - increase the points total
-       * - increase the speed
-       * - move the box to the left side of the screen.
-       */
+      
       function handleBoxClick(event) {
-        event.stopPropagation();
 
         positionX = Math.random() * (boardWidth - box.width());
         positionY = Math.random() * (boardHeight - box.height());
