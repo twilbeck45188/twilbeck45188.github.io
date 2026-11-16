@@ -37,6 +37,7 @@ const KEY = {
   Note: You can have multiple event listeners for different types of events.
   */
   $(document).on('keydown', handleKeyDown);                          
+  $(document).on('keyup', handleKeyUp);                          
 
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
@@ -48,6 +49,7 @@ const KEY = {
   */
   function newFrame() {
     repositionGameItem();
+    wallCollision();
     redrawGameItem();
   }
   
@@ -77,7 +79,24 @@ else if(event.which === KEY.RIGHT){
   }
 
   }
-
+function handleKeyUp(event){
+if (event.which === KEY.LEFT) {
+   walker.speedX = 0;
+    //move left
+}
+if(event.which === KEY.UP){
+  walker.speedY = 0;
+  //move up
+}
+if(event.which === KEY.DOWN){
+  walker.speedY = 0;
+  // move down
+}
+if(event.which === KEY.RIGHT){
+  walker.speedX = 0; 
+  //move right
+  }
+}
   ////////////////////////////////////////////////////////////////////////////////
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
@@ -102,7 +121,20 @@ $("#walker").css("top", walker.y);
 //console.log("Walker position:", walker.x, walker.y);
 
 }
-
-
-
+function wallCollision(){
+if(walker.x < 0){
+  walker.x = 0;
 }
+if(walker.y < 0){
+  walker.y = 0
+}
+if(walker.x + $("#walker").width() > $("#board").width()){
+  walker.x = $("#board").width() - $("#walker").width();
+}
+
+if(walker.y  + $("#walker").height() > $("#board").height()){
+  walker.y = $("#board").height() - $("#walker").height();
+}
+
+  }
+    }
